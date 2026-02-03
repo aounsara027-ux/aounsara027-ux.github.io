@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aoun ❤️ Sara</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url("background.jpg") center/cover no-repeat fixed;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+/* ================= LETTER ================= */
+#letter {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.envelope {
+    width: 300px;
+    height: 200px;
+    background: #ff4d6d;
+    position: relative;
+    cursor: pointer;
+    animation: pulse 2s infinite;
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    top: -120px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 120px solid #ff758f;
+}
+
+@keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* ================= CONTENT ================= */
+#content {
+    display: none;
+    background: rgba(0,0,0,0.65);
+    padding-bottom: 100px;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 48px;
+    margin-top: 30px;
+}
+
+section {
+    padding: 50px 20px;
+}
+
+/* ================= MESSAGE ================= */
+textarea {
+    width: 80%;
+    max-width: 500px;
+    height: 120px;
+    border-radius: 15px;
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+}
+
+/* ================= BUTTON ================= */
+button {
+    background: #ff4d6d;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    background: #ff1f4a;
+}
+
+/* ================= KISS GAME ================= */
+.couple {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 120px;
+    margin-top: 40px;
+    position: relative;
+}
+
+.couple img {
+    width: 160px;
+    transition: transform 1s ease;
+}
+
+.kiss-aoun {
+    transform: translateX(70px) rotate(10deg);
+}
+
+.kiss-sara {
+    transform: translateX(-70px) rotate(-10deg);
+}
+
+/* KISS IMAGE */
+#kissImg {
+    position: absolute;
+    width: 80px;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.6s ease;
+    pointer-events: none;
+}
+.show-kiss {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* ================= HEART CONFETTI ================= */
+.heart {
+    position: fixed;
+    top: -10px;
+    width: 30px;
+    animation: fall linear forwards;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+footer {
+    opacity: 0.7;
+    margin-top: 60px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 AUDIO -->
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="kissSound">
+    <source src="kiss.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 💌 LETTER -->
+<div id="letter">
+    <div class="envelope" onclick="openLetter()"></div>
+</div>
+
+<!-- 💖 CONTENT -->
+<div id="content">
+
+<h1>Aoun ❤️ Sara</h1>
+<p>Happy Valentine’s Day, NINIIIIIII MERI JAAAAAN, will you be my valentine's uwu ilysmmm youre the best im sorry im mean to you sometimes but ily sooooo much i hope you like this website im a geek what else can i do ilysm you deserve so much more than this mwahhhhh dw this is still a letter if not a handwritten letter mwahhhhhilysm cutuuuuuu its been almost two years THE BEST TWO YEARS marry me pls ilysm youre sooo pretty i love your eyes and face and everything youre soooo perfect  💕</p>
+
+<!-- 💬 MESSAGE -->
+<section>
+    <h2>Leave Me A Message 💌</h2>
+    <textarea id="msg" placeholder="Type something cute..."></textarea><br>
+    <button onclick="saveMsg()">Save Forever ❤️</button>
+    <p id="savedMsg"></p>
+</section>
+
+<!-- 💋 KISS GAME -->
+<section>
+    <h2>Kiss Time 💋</h2>
+    <div class="couple">
+        <img id="aoun" src="aoun.png">
+        <img id="kissImg" src="kiss.png">
+        <img id="sara" src="sara.png">
+    </div>
+    <button onclick="kiss()">KISS 💋</button>
+</section>
+
+<!-- 💘 LOVE GAME -->
+<section>
+    <h2>How Much Do You Love Me? 💘</h2>
+    <button onclick="love()">Tap 💖</button>
+    <p id="loveText"></p>
+</section>
+
+<footer>
+    Made with ❤️ by Aoun for Sara
+</footer>
+
+</div>
+
+<script>
+/* OPEN LETTER */
+function openLetter() {
+    document.getElementById("letter").style.display = "none";
+    document.getElementById("content").style.display = "block";
+
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.4;
+    music.play();
+
+    startHearts();
+}
+
+/* SAVE MESSAGE */
+function saveMsg() {
+    const text = document.getElementById("msg").value;
+    localStorage.setItem("saraMsg", text);
+    document.getElementById("savedMsg").innerText = "Saved forever ❤️";
+}
+
+document.getElementById("savedMsg").innerText =
+    localStorage.getItem("saraMsg") || "";
+
+/* 💋 KISS LOGIC */
+let kissing = false;
+
+function kiss() {
+    if (kissing) return;
+    kissing = true;
+
+    const aoun = document.getElementById("aoun");
+    const sara = document.getElementById("sara");
+    const kissImg = document.getElementById("kissImg");
+    const sound = document.getElementById("kissSound");
+
+    // Move faces closer
+    aoun.classList.add("kiss-aoun");
+    sara.classList.add("kiss-sara");
+
+    // Change faces to kiss
+    aoun.src = "aoun_kiss.png";
+    sara.src = "sara_kiss.png";
+
+    // Play kiss sound
+    sound.currentTime = 0;
+    sound.play();
+
+    // Burst hearts
+    burstHearts();
+
+    // Position kiss.png dynamically between faces
+    const aRect = aoun.getBoundingClientRect();
+    const sRect = sara.getBoundingClientRect();
+
+    kissImg.style.left = (aRect.right + sRect.left)/2 - kissImg.offsetWidth/2 + "px";
+    kissImg.style.top = (aRect.top + sRect.top)/2 - kissImg.offsetHeight/2 + "px";
+
+    // Show & animate kiss image
+    kissImg.classList.add("show-kiss");
+
+    // Hide kiss after 1.5s
+    setTimeout(() => kissImg.classList.remove("show-kiss"), 1500);
+
+    // Reset faces after 4s
+    setTimeout(() => {
+        aoun.classList.remove("kiss-aoun");
+        sara.classList.remove("kiss-sara");
+        aoun.src = "aoun.png";
+        sara.src = "sara.png";
+        kissing = false;
+    }, 4000);
+}
+
+/* LOVE GAME */
+function love() {
+    const texts = [
+        "Infinity ♾️",
+        "Forever 💍",
+        "Only You ❤️",
+        "More Than Everything 🌍",
+        "Endless 💖"
+    ];
+    document.getElementById("loveText").innerText =
+        texts[Math.floor(Math.random() * texts.length)];
+}
+
+/* HEART CONFETTI */
+function startHearts() {
+    setInterval(createHeart, 600);
+}
+
+function burstHearts() {
+    for (let i = 0; i < 25; i++) createHeart();
+}
+
+function createHeart() {
+    const heart = document.createElement("img");
+    heart.src = "heart.png";
+    heart.className = "heart";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 5000);
+}
+</script>
+
+</body>
+</html>
