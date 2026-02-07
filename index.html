@@ -134,7 +134,6 @@ function hideAll() {
     });
 }
 
-// Slap Logic
 let health = 100;
 let slapState = 0; 
 const sadMsgs = ["Ouch! That hurts! 😭", "I'm crying now... 🥺", "Why are you so mean? 💔", "My heart hurts too... 🤕", "Please stap hitting me! ❤️", "I'm so sad... 😭", "Nini please be nice! 🥺"];
@@ -163,19 +162,26 @@ function slapAoun() {
     setTimeout(() => newOuch.remove(), 1000);
 }
 
+// FIXED PYAR KAREN FOR MOBILE
 function pyarKaren() {    
     const img = document.getElementById("aounGameImg");
     const bar = document.getElementById("healthBar");
     const label = document.getElementById("healthLabel");
     const msgBox = document.getElementById("slapMsg");        
-    
-    // DIRECT AUDIO FIX FOR MOBILE
     const happySound = document.getElementById("happySound");
-    happySound.currentTime = 0;
-    happySound.play().catch(e => console.log("Audio failed", e));
 
+    // Resetting states
     health = 100;
     slapState = 0;
+    
+    // Direct Mobile Play - No cloning
+    happySound.pause(); 
+    happySound.currentTime = 0;
+    happySound.play().catch(e => {
+        // Fallback for some browsers
+        console.log("Normal play failed, trying alternative", e);
+    });
+
     img.src = "aoun_happy.png";
     bar.style.width = "100%";
     label.innerText = "Nini's Love: 100% (FULL! ❤️)";
@@ -183,70 +189,12 @@ function pyarKaren() {
     burstHearts();        
     
     setTimeout(() => {         
-        if(health === 100) { img.src = "aoun_idle.png"; msgBox.innerText = "Thapar lagain zra 🖐️"; }
+        if(health === 100) { 
+            img.src = "aoun_idle.png"; 
+            msgBox.innerText = "Thapar lagain zra 🖐️"; 
+        }
     }, 3000);
 }
 
 function kiss() {    
     const aoun = document.getElementById("aoun");
-    const sara = document.getElementById("sara");
-    const kissImg = document.getElementById("kissImg");
-    const clone = document.getElementById("kissSound").cloneNode(true);        
-    aoun.classList.add("kiss-aoun");
-    sara.classList.add("kiss-sara");
-    aoun.src = "aoun_kiss.png";
-    sara.src = "sara_kiss.png";
-    clone.play();
-    burstHearts();
-    kissImg.classList.add("show-kiss");
-    setTimeout(() => {        
-        kissImg.classList.remove("show-kiss");
-        aoun.classList.remove("kiss-aoun");
-        sara.classList.remove("kiss-sara");
-        aoun.src = "aoun.png";
-        sara.src = "sara.png";    
-    }, 4000);
-}
-
-// Fixed Start Sequence
-document.getElementById("yesBtn").onclick = () => {    
-    if (!musicStarted) { bgMusic.volume = 0.1; bgMusic.play(); musicStarted = true; startHearts(); }    
-    goBackToMenu();
-};
-
-document.getElementById("noBtn").onclick = () => {    
-    noClickCount++;
-    const yes = document.getElementById("yesBtn");
-    const no = document.getElementById("noBtn");
-    const msg = document.getElementById("message");
-    const gif = document.getElementById("gif");
-    
-    let scale = (parseFloat(yes.style.transform.replace('scale(','')) || 1) + 0.3;
-    yes.style.transform = `scale(${scale})`;
-    
-    gif.src = "angry2.gif"; 
-    
-    if (noClickCount < 5) {
-        msg.innerText = "Nini please... 😭";
-    } else {
-        msg.innerText = "You have only one option now! 😤";
-        no.classList.add("hidden"); 
-    }
-};
-
-function openModal(src) { document.getElementById("imageModal").style.display = "flex"; document.getElementById("modalImg").src = src; }
-function closeModal() { document.getElementById("imageModal").style.display = "none"; }
-function startHearts() { setInterval(createHeart, 600); }
-function burstHearts() { for (let i = 0; i < 20; i++) createHeart(); }
-function createHeart() {    
-    const heart = document.createElement("img");
-    heart.src = "heart.png";
-    heart.className = "heart";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 5000);
-}
-</script>
-</body>
-</html>
