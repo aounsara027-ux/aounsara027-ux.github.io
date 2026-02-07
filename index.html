@@ -180,14 +180,13 @@ button:hover {
     .gallery { grid-template-columns: repeat(2, 1fr); }
     
     .couple { 
-        gap: 30px; /* Tight gap for mobile */
+        gap: 25px; /* Even tighter for small screens */
     }
     
     .couple img { 
-        width: 100px; /* Smaller characters for mobile */
+        width: 100px;
     }
 
-    /* Fixed translation so they touch but don't overlap faces */
     .kiss-aoun { transform: translateX(25px) rotate(8deg); }
     .kiss-sara { transform: translateX(-25px) rotate(-8deg); }
 
@@ -226,7 +225,7 @@ footer { opacity: 0.7; margin-top: 60px; font-size: 14px; padding-bottom: 20px; 
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<audio id="kissSound">
+<audio id="kissSound" preload="auto">
     <source src="kiss.mp3" type="audio/mpeg">
 </audio>
 
@@ -235,7 +234,7 @@ footer { opacity: 0.7; margin-top: 60px; font-size: 14px; padding-bottom: 20px; 
 </div>
 
 <div class="container" id="questionScreen">
-    <h1>Nini Jaan ❤️</h1>
+    <h1>Niniiii Jaan ❤️</h1>
     <h2>Will you be my Valentine? 💖</h2>
     <img id="gif" src="angry1.gif" class="gif">
     <div>
@@ -255,7 +254,7 @@ footer { opacity: 0.7; margin-top: 60px; font-size: 14px; padding-bottom: 20px; 
         <button onclick="showKissPage()">💋 Kiss Game</button>
         <button onclick="showMsgPage()">💬 Message Box</button>
     </div>
-    <footer>Made with ❤️ by Aoun for Sara</footer>
+    <footer>Made with ❤️ by Aoun for Sara Jaan</footer>
 </div>
 
 <div class="container hidden" id="letterPage">
@@ -394,26 +393,26 @@ function kiss() {
     const aoun = document.getElementById("aoun");
     const sara = document.getElementById("sara");
     const kissImg = document.getElementById("kissImg");
-    const sound = document.getElementById("kissSound");
-
-    // MOBILE SOUND FIX: Pause and reset before playing
-    sound.pause();
-    sound.currentTime = 0;
+    
+    // THE MOBILE ULTIMATE FIX: Create a clone of the sound every time
+    const soundTemplate = document.getElementById("kissSound");
+    const newSound = soundTemplate.cloneNode(true);
+    newSound.volume = 1.0;
     
     aoun.classList.add("kiss-aoun");
     sara.classList.add("kiss-sara");
     aoun.src = "aoun_kiss.png";
     sara.src = "sara_kiss.png";
 
-    // Play sound with a tiny delay to help mobile browsers catch up
-    setTimeout(() => {
-        sound.play().catch(e => console.log("Audio play failed:", e));
-    }, 50);
+    // Play the clone
+    newSound.play().catch(e => console.log("Audio play failed:", e));
 
     burstHearts();
 
     kissImg.classList.add("show-kiss");
-    setTimeout(() => { kissImg.classList.remove("show-kiss"); }, 1300);
+    setTimeout(() => { 
+        kissImg.classList.remove("show-kiss"); 
+    }, 1300);
 
     setTimeout(() => {
         aoun.classList.remove("kiss-aoun");
@@ -421,6 +420,8 @@ function kiss() {
         aoun.src = "aoun.png";
         sara.src = "sara.png";
         kissing = false;
+        // Clean up memory
+        newSound.remove();
     }, 4000);
 }
 
