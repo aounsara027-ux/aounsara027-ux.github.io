@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aoun ❤️ Sara</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+body {    margin: 0;    font-family: 'Poppins', sans-serif;    background: url("background.jpg") center/cover no-repeat fixed;    color: white;    text-align: center;    overflow-x: hidden;}
+.hidden { display: none; }
+.container {    background: rgba(0,0,0,0.75);    backdrop-filter: blur(8px);    padding: 30px;    margin: 40px auto;    width: 90%;    max-width: 750px;    border-radius: 25px;    border: 2px solid rgba(255, 100, 140, 0.3);    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);}
+h1 { font-family: 'Pacifico', cursive; font-size: clamp(32px, 8vw, 52px); margin-top: 20px; color: #ff85a1; }
+h2 { font-family: 'Pacifico', cursive; font-size: clamp(24px, 5vw, 36px); margin-bottom: 10px; }
+button {    background: #ff4d6d;    border: none;    padding: 12px 30px;    border-radius: 50px;    color: white;    font-size: 16px;    font-weight: 600;    cursor: pointer;    margin: 10px;    transition: all 0.3s ease;    box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);}
+button:hover { background: #ff1f4a; transform: translateY(-3px) scale(1.05); }
+#healthContainer {    width: 80%;    height: 25px;    background: #444;    border-radius: 20px;    margin: 15px auto;    border: 2px solid #ff85a1;    overflow: hidden;    position: relative;}
+#healthBar {    width: 100%;    height: 100%;    background: linear-gradient(90deg, #ff4d6d, #ff85a1);    transition: width 0.3s ease;}
+#healthLabel {    position: absolute;    width: 100%;    top: 0; left: 0;    font-size: 12px;    font-weight: bold;    line-height: 21px;    text-shadow: 1px 1px 2px black;}
+#aounGameImg {    width: 220px;    cursor: pointer;    transition: transform 0.1s;    user-select: none;    -webkit-user-drag: none;}
+.shake { animation: shake 0.2s ease-in-out; }
+@keyframes shake {    0% { transform: translateX(0); }    25% { transform: translateX(-10px) rotate(-5deg); }    50% { transform: translateX(10px) rotate(5deg); }    100% { transform: translateX(0); }}
+.letterText { font-family: 'Dancing Script', cursive; font-size: 22px; line-height: 1.6; text-align: left; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 15px; }
+.gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 25px; }
+.gallery img { width: 100%; height: 120px; object-fit: cover; border-radius: 12px; border: 2px solid rgba(255, 100, 160, 0.5); cursor: pointer; transition: 0.3s; }
+.modal { display: none; position: fixed; z-index: 10000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+.modal-content { max-width: 85%; max-height: 80vh; border: 8px solid white; border-radius: 10px; animation: zoom 0.3s ease-out; }
+@keyframes zoom { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.couple { display: flex; justify-content: center; align-items: center; gap: 160px; margin-top: 40px; position: relative; }
+.couple img { width: 170px; transition: transform 1.2s ease; }
+.kiss-aoun { transform: translateX(90px) rotate(8deg); }
+.kiss-sara { transform: translateX(-90px) rotate(-8deg); }
+#kissImg { position: absolute; width: 120px; opacity: 0; transform: scale(0); transition: all 0.5s ease; pointer-events: none; z-index: 99; }
+.show-kiss { opacity: 1; transform: scale(1.6); animation: popZoom 1.2s ease forwards; }
+@keyframes popZoom { 0% { opacity: 0; transform: scale(0); } 30% { opacity: 1; transform: scale(1.8); } 70% { opacity: 1; transform: scale(1.3); } 100% { opacity: 0; transform: scale(0.2); } }
+@media (max-width: 600px) {    .gallery { grid-template-columns: repeat(2, 1fr); }    .couple { gap: 25px; }    .couple img { width: 100px; }    .kiss-aoun { transform: translateX(25px) rotate(8deg); }    .kiss-sara { transform: translateX(-25px) rotate(-8deg); }    #kissImg { width: 70px; }}
+.heart { position: fixed; top: -10px; width: 35px; animation: fall linear forwards; pointer-events: none; z-index: 9999; }
+@keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+footer { opacity: 0.7; margin-top: 60px; font-size: 14px; }
+</style>
+</head>
+<body>
+<audio id="bgMusic" loop><source src="music.mp3" type="audio/mpeg"></audio>
+<audio id="kissSound" preload="auto"><source src="kiss.mp3" type="audio/mpeg"></audio>
+<audio id="ouchSound" preload="auto"><source src="ouch.mp3" type="audio/mpeg"></audio>
+<audio id="happySound" preload="auto"><source src="happy.mp3" type="audio/mpeg"></audio>
+
+<div class="modal" id="imageModal" onclick="closeModal()">    <img class="modal-content" id="modalImg"></div>
+
+<div class="container" id="questionScreen">    
+    <h1>Nini Jaan ❤️</h1>    
+    <h2>Will you be my Valentine? 💖</h2>    
+    <img id="gif" src="angry1.gif" class="gif" style="width:220px; border-radius:15px;">    
+    <div>        
+        <button id="yesBtn">Yes 💕</button>        
+        <button id="noBtn">No 😢</button>    
+    </div>    
+    <p id="message"></p>
+</div>
+
+<div class="container hidden" id="menuScreen">    
+    <h1>Aoun ❤️ Sara</h1>    
+    <h2>Happy Valentines Dayyyy! 🥰💘</h2>    
+    <div>        
+        <button onclick="showLetterPage()">💌 Letter</button>        
+        <button onclick="showMemoryPage()">📸 Memory Lane</button>        
+        <button onclick="showKissPage()">💋 Kiss</button>        
+        <button onclick="showSlapPage()">🖐️ Slap Me, Love Me</button>    
+    </div>    
+    <footer>Made with ❤️ by Aoun for Sara Jaan</footer>
+</div>
+
+<div class="container hidden" id="letterPage">    
+    <h1>For My Nini ❤️</h1>    
+    <p class="letterText">        
+        Hiiii Niniiii! 👋<br><br>        
+        I really hope you liked this little surprise. I know you probably deserve way better than a website, but me being a geek, this is the best way to surprise you without being there physically. 😭💻<br><br>        
+        Damn, it’s already been almost 2 years? Nicee. Honestly Nini, these have been the two best years of my life.<br><br>        
+        Thanks for being the cutest missus and for putting up with me. I love you alot, cutie. <br><br>        
+        Happy Valentine's Day! ❤️💍    
+    </p>    
+    <button onclick="goBackToMenu()">⬅ Back</button>
+</div>
+
+<div class="container hidden" id="memoryPage">    
+    <h1>Our Memory Lane 📸</h1>    
+    <div class="gallery">        
+        <script>            
+            for(let i=1; i<=20; i++) {                
+                document.write(`<img src="${i}.jpeg" onclick="openModal(this.src)">`);            
+            }        
+        </script>    
+    </div>    
+    <button onclick="goBackToMenu()">⬅ Back</button>
+</div>
+
+<div class="container hidden" id="kissPage">    
+    <h1>Kiss Time 💋</h1>    
+    <div class="couple">        
+        <img id="aoun" src="aoun.png">        
+        <img id="kissImg" src="kiss.png">        
+        <img id="sara" src="sara.png">    
+    </div>    
+    <button onclick="kiss()">KISS 💋</button>    
+    <button onclick="goBackToMenu()">⬅ Back</button>
+</div>
+
+<div class="container hidden" id="slapPage">    
+    <h1>Slap Me all you want</h1>    
+    <button onclick="pyarKaren()" style="background: #4cc9f0;">Pyar Karen ✨</button>        
+    <div id="healthContainer">        
+        <div id="healthBar"></div>        
+        <div id="healthLabel">Nini's Love: 100%</div>    
+    </div>
+    <img id="aounGameImg" src="aoun_idle.png" onclick="slapAoun()">    
+    <p id="slapMsg">RAKHHHH KR THAPAR MAREN 🖐️</p>        
+    <button onclick="goBackToMenu()">⬅ Back</button>
+</div>
+
+<script>
+const bgMusic = document.getElementById("bgMusic");
+let musicStarted = false;
+let noClickCount = 0;
+
+function goBackToMenu() { hideAll(); document.getElementById("menuScreen").classList.remove("hidden"); }
+function showLetterPage() { hideAll(); document.getElementById("letterPage").classList.remove("hidden"); }
+function showMemoryPage() { hideAll(); document.getElementById("memoryPage").classList.remove("hidden"); }
+function showKissPage() { hideAll(); document.getElementById("kissPage").classList.remove("hidden"); }
+function showSlapPage() { hideAll(); document.getElementById("slapPage").classList.remove("hidden"); }
+
+function hideAll() {    
+    ["questionScreen","menuScreen", "letterPage", "memoryPage", "kissPage", "slapPage"].forEach(id => {        
+        document.getElementById(id).classList.add("hidden");    
+    });
+}
+
+let health = 100;
+let slapState = 0; 
+const sadMsgs = ["Ouch! That hurts! 😭", "I'm crying now... 🥺", "Why are you so mean? 💔", "My heart hurts too... 🤕", "Please stap hitting me! ❤️", "I'm so sad... 😭", "Nini please be nice! 🥺"];
+const happyMsgs = ["I love you!! 🥰", "Nini is the best! ❤️", "Yay! No more slaps! ✨", "I am so happy! 🥰", "OMG I feel the love! 💖"];
+
+function slapAoun() {    
+    if (health <= 0) return;
+    const img = document.getElementById("aounGameImg");
+    const bar = document.getElementById("healthBar");
+    const label = document.getElementById("healthLabel");
+    const msgBox = document.getElementById("slapMsg");        
+    const ouchTemplate = document.getElementById("ouchSound");
+    const newOuch = ouchTemplate.cloneNode(true);
+    newOuch.play().catch(e => console.log("Audio failed", e));
+    health -= 10;
+    slapState++;
+    img.classList.remove("shake");
+    void img.offsetWidth;     
+    img.classList.add("shake");
+    if (slapState === 1) img.src = "aoun_slap1.png";
+    else if (slapState >= 2) img.src = "aoun_slap2.png";        
+    bar.style.width = health + "%";
+    label.innerText = `Nini's Love: ${health}%`;        
+    if(health <= 0) { msgBox.innerText = "Need some love"; } 
+    else { msgBox.innerText = sadMsgs[Math.floor(Math.random() * sadMsgs.length)]; }
+    setTimeout(() => newOuch.remove(), 1000);
+}
+
+// FIXED PYAR KAREN FOR MOBILE
+function pyarKaren() {    
+    const img = document.getElementById("aounGameImg");
+    const bar = document.getElementById("healthBar");
+    const label = document.getElementById("healthLabel");
+    const msgBox = document.getElementById("slapMsg");        
+    const happySound = document.getElementById("happySound");
+
+    // Resetting states
+    health = 100;
+    slapState = 0;
+    
+    // Direct Mobile Play - No cloning
+    happySound.pause(); 
+    happySound.currentTime = 0;
+    happySound.play().catch(e => {
+        // Fallback for some browsers
+        console.log("Normal play failed, trying alternative", e);
+    });
+
+    img.src = "aoun_happy.png";
+    bar.style.width = "100%";
+    label.innerText = "Nini's Love: 100% (FULL! ❤️)";
+    msgBox.innerText = happyMsgs[Math.floor(Math.random() * happyMsgs.length)];        
+    burstHearts();        
+    
+    setTimeout(() => {         
+        if(health === 100) { 
+            img.src = "aoun_idle.png"; 
+            msgBox.innerText = "Thapar lagain zra 🖐️"; 
+        }
+    }, 3000);
+}
+
+function kiss() {    
+    const aoun = document.getElementById("aoun");
