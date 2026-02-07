@@ -254,21 +254,21 @@ footer { opacity: 0.7; margin-top: 60px; font-size: 14px; padding-bottom: 20px; 
         <button onclick="showKissPage()">💋 Kiss Game</button>
         <button onclick="showMsgPage()">💬 Message Box</button>
     </div>
-    <footer>Made with ❤️ by Aoun for Sara Jaan</footer>
+    <footer>Made with ❤️ by Aoun for Nini Jaan</footer>
 </div>
 
 <div class="container hidden" id="letterPage">
-    <h1>My Letter 💖</h1>
+    <h1>For My Boni ❤️</h1>
     <p class="letterText">
-        Dear Sara Jaan (meri Nini Baby) ❤️<br><br>
-        I don’t even know where to start because you mean everything to me.<br><br>
-        You are my safe place, my happiness, and the most beautiful part of my life.
-        Every time I talk to you, my whole mood becomes better.<br><br>
-        You make my world brighter without even trying.<br><br>
-        I know I annoy you sometimes and I act stupid 😭
-        but please know that I love you more than anything.
-        I want you forever.<br><br>
-        Happy Valentine’s Day my baby 💕🌹
+        Hiiii Niniiii! 👋<br><br>
+
+        I really hope you liked this little surprise. I know you probably deserve way better than a website, but me being a geek, this is the best way I can to a valentines without being there 😭💻<br><br>
+
+        Damn, it’s already been almost 2 years? Nicee. Honestly nini, these have been the two best years of my life, fr.<br><br>
+
+        Thanks for being the best missus ever and for putting up with me. I love you tons, byeeee. <br><br>
+
+        Happy Valentine's Day! ❤️💍
     </p>
     <button onclick="goBackToMenu()">⬅ Back</button>
 </div>
@@ -302,7 +302,6 @@ footer { opacity: 0.7; margin-top: 60px; font-size: 14px; padding-bottom: 20px; 
 
 <div class="container hidden" id="kissPage">
     <h1>Kiss Time 💋</h1>
-    <h2>Click kiss and watch magic 😭❤️</h2>
     <div class="couple">
         <img id="aoun" src="aoun.png">
         <img id="kissImg" src="kiss.png">
@@ -314,7 +313,7 @@ footer { opacity: 0.7; margin-top: 60px; font-size: 14px; padding-bottom: 20px; 
 
 <div class="container hidden" id="msgPage">
     <h1>Leave Me A Message 💌</h1>
-    <textarea id="msg" placeholder="Type something cute Sara jaan..."></textarea><br>
+    <textarea id="msg" placeholder="Type something nini..."></textarea><br>
     <button onclick="saveMsg()">Save Forever ❤️</button>
     <p id="savedMsg"></p>
     <button onclick="goBackToMenu()">⬅ Back</button>
@@ -351,12 +350,12 @@ function startMusicAndHearts() {
 noBtn.onclick = () => {
     startMusicAndHearts();
     noCount++;
-    message.innerText = "Nini Baby think again 😭💔";
+    message.innerText = "Not funny 😐🙄";
     yesBtn.style.transform = `scale(${1 + noCount * 0.35})`;
     if (noCount === 1) gif.src = "angry1.gif";
     if (noCount === 2) gif.src = "angry2.gif";
     if (noCount === 3) gif.src = "angry3.gif";
-    if (noCount >= 3) { noBtn.style.display = "none"; message.innerText = "You only have one option now 😌❤️"; }
+    if (noCount >= 3) { noBtn.style.display = "none"; message.innerText = "You only have one option now 🙄😐"; }
 };
 
 yesBtn.onclick = () => {
