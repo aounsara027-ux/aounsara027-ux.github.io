@@ -120,6 +120,7 @@ footer { opacity: 0.7; margin-top: 60px; font-size: 14px; }
 <script>
 const bgMusic = document.getElementById("bgMusic");
 let musicStarted = false;
+let noClickCount = 0;
 
 function goBackToMenu() { hideAll(); document.getElementById("menuScreen").classList.remove("hidden"); }
 function showLetterPage() { hideAll(); document.getElementById("letterPage").classList.remove("hidden"); }
@@ -133,6 +134,7 @@ function hideAll() {
     });
 }
 
+// Slap Logic
 let health = 100;
 let slapState = 0; 
 const sadMsgs = ["Ouch! That hurts! 😭", "I'm crying now... 🥺", "Why are you so mean? 💔", "My heart hurts too... 🤕", "Please stap hitting me! ❤️", "I'm so sad... 😭", "Nini please be nice! 🥺"];
@@ -203,19 +205,33 @@ function kiss() {
     }, 4000);
 }
 
+// Fixed Start Sequence
 document.getElementById("yesBtn").onclick = () => {    
     if (!musicStarted) { bgMusic.volume = 0.1; bgMusic.play(); musicStarted = true; startHearts(); }    
     goBackToMenu();
 };
 
 document.getElementById("noBtn").onclick = () => {    
+    noClickCount++;
     const yes = document.getElementById("yesBtn");
+    const no = document.getElementById("noBtn");
     const msg = document.getElementById("message");
     const gif = document.getElementById("gif");
+    
+    // Scale up the Yes button
     let scale = (parseFloat(yes.style.transform.replace('scale(','')) || 1) + 0.3;
     yes.style.transform = `scale(${scale})`;
-    gif.src = "angry2.gif"; // Changes GIF when clicking No
-    msg.innerText = "Nini please... 😭";
+    
+    // Switch to second angry GIF
+    gif.src = "angry2.gif"; 
+    
+    // Change messages based on clicks
+    if (noClickCount < 5) {
+        msg.innerText = "Nini please... 😭";
+    } else {
+        msg.innerText = "You have only one option now! 😤";
+        no.classList.add("hidden"); // Hide No button after 5 clicks
+    }
 };
 
 function openModal(src) { document.getElementById("imageModal").style.display = "flex"; document.getElementById("modalImg").src = src; }
